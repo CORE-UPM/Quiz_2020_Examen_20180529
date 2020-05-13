@@ -17,6 +17,9 @@ const Quiz = sequelize.import(path.join(__dirname, 'quiz'));
 // Import the definition of the Users Table from user.js
 const User = sequelize.import(path.join(__dirname,'user'));
 
+// Import the definition of the Logins Table from login.js
+const Login = sequelize.import(path.join(__dirname,'login'));
+
 // Session
 sequelize.import(path.join(__dirname,'session'));
 
@@ -24,6 +27,13 @@ sequelize.import(path.join(__dirname,'session'));
 // Relation 1-to-N between User and Quiz:
 User.hasMany(Quiz, {as: 'quizzes', foreignKey: 'authorId'});
 Quiz.belongsTo(User, {as: 'author', foreignKey: 'authorId'});
+
+
+
+// Relation 1-to-N between User and Login:
+User.hasMany(Login, {as: 'logins', foreignKey: 'userId'});
+Login.belongsTo(User, {as: 'user', foreignKey: 'userId'});
+
 
 
 module.exports = sequelize;

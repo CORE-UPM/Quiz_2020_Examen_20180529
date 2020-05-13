@@ -4,6 +4,7 @@ var router = express.Router();
 const quizController = require('../controllers/quiz');
 const userController = require('../controllers/user');
 const sessionController = require('../controllers/session');
+const loginController = require('../controllers/login');
 
 //-----------------------------------------------------------
 
@@ -18,6 +19,7 @@ router.get('/login', sessionController.new);
 // create login session
 router.post('/login',
     sessionController.create,
+    loginController.create,
     sessionController.createLoginExpires);
 
 // Authenticate with OAuth 2.0 at Github
@@ -25,6 +27,7 @@ router.get('/auth/github',
     sessionController.authGitHub);
 router.get('/auth/github/callback',
     sessionController.authGitHubCB,
+    loginController.create,
     sessionController.createLoginExpires);
 
 // logout - close login session
@@ -150,6 +153,14 @@ router.delete('/quizzes/:quizId(\\d+)',
 
 router.get('/quizzes/:quizId(\\d+)/play',  quizController.play);
 router.get('/quizzes/:quizId(\\d+)/check', quizController.check);
+
+
+
+router.get('/logins',
+    sessionController.loginRequired,
+    sessionController.adminRequired,
+    loginController.index);
+
 
 
 module.exports = router;

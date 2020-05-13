@@ -43,6 +43,10 @@
         <% if (locals.loginUser) { %>
             <a href="/users">Users</a>
         <% } %>
+
+        <% if (locals.loginUser && locals.loginUser.isAdmin) { %>
+            <a href="/logins">Logins</a>
+        <% } %>
     </nav>
 
 
